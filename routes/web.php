@@ -15,6 +15,11 @@ use App\Http\Controllers\ApiController;
 |
 */
 Route::apiResource('api', ApiController::class);
+Route::get('/apis', [ApiController::class, 'index']);
+Route::post('/apis', [ApiController::class, 'store']);
+Route::get('/apis/{api}', [ApiController::class, 'show']);
+Route::put('/apis/{api}', [ApiController::class, 'update']);
+Route::delete('/apis/{api}', [ApiController::class, 'destroy']);
 
 Route::get('/', function () {
     return view('welcome');
