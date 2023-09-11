@@ -14,7 +14,7 @@ use App\Http\Controllers\ApiController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::apiResource('api', ApiController::class);
+//Route::apiResource('api', ApiController::class);
 Route::get('/apis', [ApiController::class, 'index']);
 Route::post('/apis', [ApiController::class, 'store']);
 Route::get('/apis/{api}', [ApiController::class, 'show']);
