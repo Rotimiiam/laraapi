@@ -29,5 +29,4 @@ class StoreApiRequest extends FormRequest
         ];
     }
     
-    
 }
