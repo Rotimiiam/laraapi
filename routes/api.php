@@ -16,7 +16,7 @@ use App\Http\Controllers\ApiController;
 */
 
 // Define the API resource routes for the "api" resource without the /api prefix.
-Route::get('/apis', [ApiController::class, 'index']);
+Route::get('/api', [ApiController::class, 'index']);
 Route::post('/apis', [ApiController::class, 'store']);
 Route::get('/apis/{api}', [ApiController::class, 'show']);
 Route::put('/apis/{api}', [ApiController::class, 'update']);
