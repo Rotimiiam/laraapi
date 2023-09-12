@@ -16,12 +16,12 @@ class ApiController extends Controller
         return ApiResource::collection($apis);
     }
 
-    public function store(StoreApiRequest $request)
+  /*  public function store(StoreApiRequest $request)
     {
         $api = Api::create($request->all());
         return new ApiResource($api);
-    }
-    public function create(Request $request, $name)
+    }*/
+    public function store(Request $request, $name)
     {
         // Validate and create a new record with the provided name
         $api = Api::create([
