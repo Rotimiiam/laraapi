@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+// app/Http/Controllers/ApiController.php
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreApiRequest;
-use App\Http\Resources\ApiResource;
+namespace App\Http\Controllers;
+
 use App\Models\Api;
 use Illuminate\Http\Request;
 
@@ -13,29 +12,63 @@ class ApiController extends Controller
     public function index()
     {
         $apis = Api::all();
-        return ApiResource::collection($apis);
+        return response()->json(['data' => $apis], 200);
     }
 
-    public function store(StoreApiRequest $request)
+    public function store(Request $request, $name)
     {
-        $api = Api::create($request->all());
-        return new ApiResource($api);
+        // Validate that $name is a string
+        if (!is_string($name)) {
+            return response()->json(['message' => 'Invalid name format'], 400);
+        }
+
+        // Create a new record with the provided name
+        $api = Api::create(['name' => $name]);
+
+        return response()->json(['data' => $api], 201);
     }
 
-    public function show(Api $api)
+    public function show($id)
     {
-        return new ApiResource($api);
+        $api = Api::find($id);
+
+        if (!$api) {
+            return response()->json(['message' => 'Api not found'], 404);
+        }
+
+        return response()->json(['data' => $api], 200);
     }
 
-    public function update(StoreApiRequest $request, Api $api)
+    public function update(Request $request, $id)
     {
-        $api->update($request->all());
-        return new ApiResource($api);
+        $api = Api::find($id);
+
+        if (!$api) {
+            return response()->json(['message' => 'Api not found'], 404);
+        }
+
+        // Validate that $name is a string
+        $name = $request->input('name');
+        if (!is_string($name)) {
+            return response()->json(['message' => 'Invalid name format'], 400);
+        }
+
+        $api->update(['name' => $name]);
+
+        return response()->json(['data' => $api], 200);
     }
 
-    public function destroy(Api $api)
+    public function destroy($id)
     {
+        $api = Api::find($id);
+
+        if (!$api) {
+            return response()->json(['message' => 'Api not found'], 404);
+        }
+
         $api->delete();
-        return response(null, 204);
+
+        return response()->json(null, 204);
     }
 }
+

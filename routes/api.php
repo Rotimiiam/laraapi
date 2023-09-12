@@ -1,30 +1,16 @@
 <?php
 
-use Illuminate\Http\Request;
+// routes/api.php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+Route::get('/api', [ApiController::class, 'index']);
+Route::get('/api/{id}', [ApiController::class, 'show']);
+Route::post('/api/{name}', [ApiController::class, 'store']);
+Route::put('/api/{id}', [ApiController::class, 'update']);
+Route::delete('/api/{id}', [ApiController::class, 'destroy']);
 
-// Define the API resource routes for the "api" resource without the /api prefix.
-Route::get('/', [ApiController::class, 'index']);
-Route::post('/', [ApiController::class, 'store']);
-Route::get('/{api}', [ApiController::class, 'show']);
-Route::put('/{api}', [ApiController::class, 'update']);
-Route::delete('/{api}', [ApiController::class, 'destroy']);
 
 // Additional routes can be defined here if needed.
 
-// Example authentication route (uses Laravel Sanctum).
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
