@@ -16,19 +16,7 @@ class ApiController extends Controller
         return ApiResource::collection($apis);
     }
 
-    // Create records through the URL with a name parameter
-    public function store(Request $request, $name)
-    {
-        // Validate and create a new record with the provided name
-        $api = Api::create([
-            'name' => $name,
-        ]);
-
-        return new ApiResource($api);
-    }
-
-    // Create records with JSON request body and validation
-    public function storeWithValidation(StoreApiRequest $request)
+    public function store(StoreApiRequest $request)
     {
         $api = Api::create($request->all());
         return new ApiResource($api);
