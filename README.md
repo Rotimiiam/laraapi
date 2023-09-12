@@ -23,28 +23,28 @@ A simple CRUD api
 
 ## Usage
 - Create (POST)
-Endpoint: /api?name=Dawn Micheals
+Endpoint: /api/Dawn Micheals
 
 This endpoint allows you to create a new record.
 
 - Read (GET)
-Endpoint: /api/{id}
+Endpoint: /api/{id}/{name}
 
 This endpoint allows you to retrieve a specific record by its ID.
 
 - Update (PUT/PATCH)
-Endpoint: /api/{id}
+Endpoint: /api/{id}/{name}
 
 This endpoint allows you to update a specific record by its ID.
 
 - Delete (DELETE)
-Endpoint: /api/{id}
+Endpoint: /api/{id}/{name}
 
 This endpoint allows you to delete a specific record by its ID.
 
 ## UML Diagram
+![Alt text](image.png)
 
-application-url/uml
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
