@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreApiRequest;
+use App\Http\Resources\ApiResource;
 use App\Models\Api;
 use Illuminate\Http\Request;
 
@@ -9,29 +12,30 @@ class ApiController extends Controller
 {
     public function index()
     {
-        return Api::all();
+        $apis = Api::all();
+        return ApiResource::collection($apis);
     }
 
-    public function store(Request $request)
+    public function store(StoreApiRequest $request)
     {
-        return Api::create($request->all());
+        $api = Api::create($request->all());
+        return new ApiResource($api);
     }
 
     public function show(Api $api)
     {
-        return $api;
+        return new ApiResource($api);
     }
 
-    public function update(Request $request, Api $api)
+    public function update(StoreApiRequest $request, Api $api)
     {
         $api->update($request->all());
-        return $api;
+        return new ApiResource($api);
     }
 
     public function destroy(Api $api)
     {
         $api->delete();
-        return response()->json(null, 204);
+        return response(null, 204);
     }
 }
-
