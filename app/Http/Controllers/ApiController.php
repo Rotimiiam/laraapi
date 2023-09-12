@@ -21,6 +21,15 @@ class ApiController extends Controller
         $api = Api::create($request->all());
         return new ApiResource($api);
     }
+    public function create(Request $request, $name)
+    {
+        // Validate and create a new record with the provided name
+        $api = Api::create([
+            'name' => $name,
+        ]);
+
+        return new ApiResource($api);
+    }
 
     public function show(Api $api)
     {
