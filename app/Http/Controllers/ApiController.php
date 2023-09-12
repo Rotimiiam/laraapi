@@ -28,47 +28,67 @@ class ApiController extends Controller
         return response()->json(['data' => $api], 201);
     }
 
-    public function show($id)
+    public function show($identifier)
     {
-        $api = Api::find($id);
-
-        if (!$api) {
-            return response()->json(['message' => 'Api not found'], 404);
+        // Check if the identifier is a numeric value (assumed as id) or a string (assumed as name)
+        if (is_numeric($identifier)) {
+            $api = Api::find($identifier);
+        } else {
+            $api = Api::where('name', $identifier)->first();
         }
-
+    
+        if (!$api) {
+            return response()->json(['message' => 'Record not found'], 404);
+        }
+    
         return response()->json(['data' => $api], 200);
     }
+    
 
-    public function update(Request $request, $id)
+
+    public function update(Request $request, $identifier)
     {
-        $api = Api::find($id);
-
-        if (!$api) {
-            return response()->json(['message' => 'Api not found'], 404);
+        // Check if the identifier is a numeric value (assumed as id) or a string (assumed as name)
+        if (is_numeric($identifier)) {
+            $api = Api::find($identifier);
+        } else {
+            $api = Api::where('name', $identifier)->first();
         }
-
+    
+        if (!$api) {
+            return response()->json(['message' => 'Record not found'], 404);
+        }
+    
         // Validate that $name is a string
         $name = $request->input('name');
         if (!is_string($name)) {
             return response()->json(['message' => 'Invalid name format'], 400);
         }
-
+    
+        // Update the record with the provided data
         $api->update(['name' => $name]);
-
+    
         return response()->json(['data' => $api], 200);
     }
+    
 
-    public function destroy($id)
+    public function destroy($identifier)
     {
-        $api = Api::find($id);
-
-        if (!$api) {
-            return response()->json(['message' => 'Api not found'], 404);
+        // Check if the identifier is numeric (consider it an ID) or a string (consider it a name)
+        if (is_numeric($identifier)) {
+            $api = Api::find($identifier);
+        } else {
+            $api = Api::where('name', $identifier)->first();
         }
-
+    
+        if (!$api) {
+            return response()->json(['message' => 'API not found'], 404);
+        }
+    
         $api->delete();
-
+    
         return response()->json(null, 204);
     }
+    
 }
 
