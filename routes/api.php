@@ -19,8 +19,8 @@ use App\Http\Controllers\ApiController;
 Route::get('/', [ApiController::class, 'index']);
 Route::post('/', [ApiController::class, 'store']);
 Route::get('/{api}', [ApiController::class, 'show']);
-Route::put('/apis/{api}', [ApiController::class, 'update']);
-Route::delete('/apis/{api}', [ApiController::class, 'destroy']);
+Route::put('/{api}', [ApiController::class, 'update']);
+Route::delete('/{api}', [ApiController::class, 'destroy']);
 
 // Additional routes can be defined here if needed.
 
