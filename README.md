@@ -15,35 +15,118 @@ A simple CRUD api
 
 
 ## Installation
-- Clone the repository.
-- Navigate to the project directory: cd laravel-crud-api
-- Install dependencies: composer install
+- Clone the repository to your local machine.
+
+```bash
+git clone https://github.com/Rotimiiam/laraapi.git
+```
+
+- Navigate to the project directory.
+
+```bash
+cd laraapi
+```
+
+- Install the required dependencies.
+
+```bash
+composer install
+```
+
 - Copy .env.example to .env and configure your database settings
-- Run migrations: php artisan migrate
+- Run migrations: 
+```bash
+php artisan migrate
+```
 
 ## Usage
-- Create (POST)
-Endpoint: /api/Dawn Micheals
+### Create a Person
 
-This endpoint allows you to create a new record.
+- **Endpoint**: `POST /`
+- **Description**: Create a new name store
+- **Request Body**:
 
-- Read (GET)
-Endpoint: /api/{id}/{name}
+```json
+{
+    "name": "Jane"
+}
 
-This endpoint allows you to retrieve a specific record by its ID.
+```
 
-- Update (PUT/PATCH)
-Endpoint: /api/{id}/{name}
+- **Response**:
 
-This endpoint allows you to update a specific record by its ID.
+```json
+{
+    "data": {
+        "name": "Jane",
+        "updated_at": "2023-09-13T07:03:43.000000Z",
+        "created_at": "2023-09-13T07:03:43.000000Z",
+        "id": 13
+    }
+}
+```
 
-- Delete (DELETE)
-Endpoint: /api/{id}/{name}
+### Get a Person by ID
 
-This endpoint allows you to delete a specific record by its ID.
+- **Endpoint**: `GET /{id}`
+- **Description**: Retrieve a person by their ID.
+- **Response**:
 
-## UML Diagram
-![Alt text](image.png)
+```json
+{
+    "data": {
+        "id": 13,
+        "name": "Jane",
+        "created_at": "2023-09-13T07:03:43.000000Z",
+        "updated_at": "2023-09-13T07:03:43.000000Z"
+    }
+}
+```
+
+### Update a Person by ID
+
+- **Endpoint**: `PUT /{id}`
+- **Description**: Update a person's name and value by their ID.
+- **Request Body**:
+
+```json
+{
+  "name": "Updated Name",
+}
+```
+
+- **Response**:
+
+```json
+{
+    "data": {
+        "id": 13,
+        "name": "Jane",
+        "created_at": "2023-09-13T07:03:43.000000Z",
+        "updated_at": "2023-09-13T07:12:48.000000Z"
+    },
+    "message": "Name updated successfully"
+}
+```
+
+### Delete a Person by ID
+
+- **Endpoint**: `DELETE /{id}`
+- **Description**: Delete a person by their ID.
+- **Response**:
+
+```json
+{
+    "message": "Jane deleted successfully",
+    "data": {
+        "id": 13,
+        "name": "Jane",
+        "created_at": "2023-09-12T08:13:08.000000Z",
+        "updated_at": "2023-09-12T08:13:08.000000Z"
+    }
+}
+```
+
 
 ## License
 

@@ -15,80 +15,68 @@ class ApiController extends Controller
         return response()->json(['data' => $apis], 200);
     }
 
-    public function store(Request $request, $name)
+    public function store(Request $request)
     {
-        // Validate that $name is a string
-        if (!is_string($name)) {
-            return response()->json(['message' => 'Invalid name format'], 400);
-        }
-
+        // Validate that 'name' is a string in the request body
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+    
         // Create a new record with the provided name
-        $api = Api::create(['name' => $name]);
-
+        $api = Api::create(['name' => $validatedData['name']]);
+    
         return response()->json(['data' => $api], 201);
     }
+    
 
-    public function show($identifier)
+    public function show($id)
     {
-        // Check if the identifier is a numeric value (assumed as id) or a string (assumed as name)
-        if (is_numeric($identifier)) {
-            $api = Api::find($identifier);
-        } else {
-            $api = Api::where('name', $identifier)->first();
-        }
-    
+        $api = Api::find($id);
+
         if (!$api) {
-            return response()->json(['message' => 'Record not found'], 404);
+            return response()->json(['message' => 'Name not found'], 404);
         }
-    
+
         return response()->json(['data' => $api], 200);
     }
     
 
 
-    public function update(Request $request, $identifier)
+    public function update(Request $request, $id)
     {
-        // Check if the identifier is a numeric value (assumed as id) or a string (assumed as name)
-        if (is_numeric($identifier)) {
-            $api = Api::find($identifier);
-        } else {
-            $api = Api::where('name', $identifier)->first();
-        }
-    
+        $api = Api::find($id);
+
         if (!$api) {
-            return response()->json(['message' => 'Record not found'], 404);
+            return response()->json(['message' => 'Name not found'], 404);
         }
-    
+
         // Validate that $name is a string
         $name = $request->input('name');
         if (!is_string($name)) {
             return response()->json(['message' => 'Invalid name format'], 400);
         }
-    
-        // Update the record with the provided data
-        $api->update(['name' => $name]);
-    
-        return response()->json(['data' => $api], 200);
-    }
-    
 
-    public function destroy($identifier)
+        $api->update(['name' => $name]);
+
+        return response()->json(['data' => $api, 'message' => 'Name updated successfully'], 200);
+    }
+
+    public function destroy($id)
     {
-        // Check if the identifier is numeric (consider it an ID) or a string (consider it a name)
-        if (is_numeric($identifier)) {
-            $api = Api::find($identifier);
-        } else {
-            $api = Api::where('name', $identifier)->first();
-        }
+        $api = Api::find($id);
     
         if (!$api) {
-            return response()->json(['message' => 'API not found'], 404);
+            return response()->json(['message' => 'Api not found'], 404);
         }
+    
+        // Store the name before deleting the record
+        $name = $api->name;
     
         $api->delete();
     
-        return response()->json(null, 204);
+        return response()->json(['message' => "$name deleted successfully", 'data' => $api], 200);
     }
+    
     
 }
 
